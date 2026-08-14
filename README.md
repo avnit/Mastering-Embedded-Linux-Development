@@ -161,3 +161,20 @@ with:
 
 <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no extra cost. Simply click on the link to claim your free PDF.</i>
 <p align="center"> <a href="https://packt.link/free-ebook/9781803232591">https://packt.link/free-ebook/9781803232591</a></p>
+
+<!-- ARCH-DIAGRAM:START -->
+
+## Architecture
+
+> Auto-generated architecture diagram. See [`docs/context-map.md`](docs/context-map.md) for the full context map (core application, containers/cloud, and database connections).
+
+```mermaid
+flowchart TD
+  User([User / Client])
+  App["Mastering-Embedded-Linux-Development<br/><small>server.py</small><br/>FastAPI + Uvicorn / Express / Node"]
+  Img["Container image<br/>(Docker)"]
+  User --> App
+  App -.deploy.-> Img
+```
+
+<!-- ARCH-DIAGRAM:END -->
