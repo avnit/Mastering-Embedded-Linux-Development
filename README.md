@@ -98,10 +98,34 @@ BR2_TARGET_UBOOT_BOARD_DEFCONFIG="nova"
 
 U-Boot was being built for the wrong target board, so you would not see the expected `nova =>` prompt on the serial console.
 
-**Page 185**: Cloning the `meta-ti` layer ultimately fails with `remote: Repository not found` because the URL has changed. Clone `meta-ti` from its new location instead.
+**Page 185**: Cloning the `poky` layer ultimately fails with `fatal: unable to connect to git.yoctoproject.org` because SSH is no longer supported. Clone `poky` via HTTPS instead.
+
+```bash
+git clone -b scarthgap https://git.yoctoproject.org/poky.git
+```
+
+Cloning the `meta-ti` layer ultimately fails with `remote: Repository not found` because the URL has changed. Clone `meta-ti` from its new location instead.
 
 ```bash
 $ git clone -b scarthgap https://github.com/TexasInstruments/meta-ti.git
+```
+
+**Page 186**: Cloning the `meta-arm` layer ultimately fails with `fatal: unable to connect to git.yoctoproject.org` because SSH is no longer supported. Clone `meta-arm` via HTTPS instead.
+
+```bash
+git clone -b scarthgap https://git.yoctoproject.org/meta-arm
+```
+
+**Page 203**: Cloning the `meta-openembedded` layer ultimately fails with `fatal: unable to connect to git.openembedded.org` because SSH is no longer supported. Clone `meta-openembedded` via HTTPS instead.
+
+```bash
+git clone -b scarthgap https://git.openembedded.org/meta-openembedded
+```
+
+Cloning the `meta-raspberrypi` layer ultimately fails with `fatal: unable to connect to git.yoctoproject.org` because SSH is no longer supported. Clone `meta-meta-raspberrypi` via HTTPS instead.
+
+```bash
+git clone -b scarthgap https://git.yoctoproject.org/meta-raspberrypi
 ```
 
 **Page 344**: The `build-beagleplay` directory mentioned in Steps 3 and 4 does not exist. The correct directory name is `build-nova`. Even though the command shown in Step 3 does not result in an immediate error, it does the wrong thing (creates a new `build-beagleplay` directory that defaults to `qemux86-64` as `MACHINE`). First, locate or recreate the `build-nova` directory from Chapter 6. 
@@ -150,7 +174,53 @@ with:
 # rmmod dummy-char
 ```
 
+**Page 416**:
+
+Replace:
+
+```bash
+$ cd MELD/Chapter15/do-work
+```
+
+with:
+
+```bash
+$ cd MELD/Chapter14/do-work
+```
+
 **Page 452**: The version of Docker bundled with the `docker.io` package is severely outdated. Install `docker-ce` instead. See dockerdocs for [instructions](https://docs.docker.com/engine/install/ubuntu/) on how to uninstall old versions and install the official version of Docker.
+
+**Page 478**:
+
+Replace:
+
+```bash
+$ bitbake-layers layerindex-fetch --branch scarthgap --fetchdir ~meta-virtualization
+```
+
+with:
+
+```bash
+$ bitbake-layers layerindex-fetch --branch scarthgap --fetchdir ~/meta-virtualization meta-virtualization
+```
+
+**Page 546**: In recent glibc versions, you must explicitly preload the debug library to enable memory tracing.
+
+Replace:
+
+```bash
+$ export MALLOC_TRACE=mtrace.log
+$ ./mtrace-example
+$ mtrace mtrace-example mtrace.log
+```
+
+with:
+
+```bash
+$ export MALLOC_TRACE=mtrace.log
+$ LD_PRELOAD=/lib/x86_64-linux-gnu/libc_malloc_debug.so.0 ./mtrace-example
+$ mtrace mtrace-example mtrace.log
+```
 
 ## Get to know the authors
 **Frank Vasquez** is an independent software consultant and trainer living in Silicon Valley. He has more than a decade of experience designing and building embedded Linux systems. During that time, he has shipped numerous products, including a rackmount DSP audio server, a diver-held sonar camcorder, an IoT hotspot, a home battery, and a grid-scale energy storage system. Since the third edition of this book was published, Frank has also become a frequent speaker at open-source software conferences including the Yocto Project Summit, Open Source Summit, FOSDEM, All Systems Go! and the Linux Plumbers Conference.
